@@ -1,0 +1,21 @@
+{
+  "name"            : "mongoose-friendly",
+  "version"         : "0.1.0",
+  "description"     : "A Mongoose plugin for friendly URLs.",
+  "main"            : "index.js",
+  "scripts"         : {
+    "test"          : "mocha"
+  },
+  "repository"      : "",
+  "keywords"        : [ "mongoose", "url", "friendly", "slug" ],
+  "author"          : "Guilherme Johansson Tramontina",
+  "license"         : "BSD",
+  "dependencies"    : {
+    "urlify"        : "0.3"
+  },
+  "devDependencies" : {
+    "mocha"         : "1.9",
+    "chai"          : "1.6",
+    "mongoose"      : "3.6"
+  }
+}
