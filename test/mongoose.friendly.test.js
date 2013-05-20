@@ -76,6 +76,16 @@ describe('friendly', function() {
       });
     });
 
+    it('does not recreate the friendly attribute when saving an existing model', function(done) {
+      new Post({ title: 'It should remain the same.' }).save(function(error, existing) {
+        existing.title = 'Now I changed it...';
+        existing.save(function(error, saved) {
+          assert.equal(saved.slug, 'it-should-remain-the-same');
+          done();
+        });
+      });
+    });
+
     it('ensures the uniqueness of the friendly attribute value', function(done) {
       new Post({ title: 'This should be UNIQUE!' }).save(function(error, post0) {
         new Post({ title: 'This should be UNIQUE!' }).save(function(error, post1) {

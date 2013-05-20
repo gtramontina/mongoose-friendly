@@ -1,3 +1,2 @@
 --require test/test.helper.js
 --timeout 1000
---reporter spec

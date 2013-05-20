@@ -24,6 +24,7 @@ module.exports = function(schema, options) {
   if (options.addIndex === true)
     friendly[options.friendly].index = { unique: true };
   schema.add(friendly);
+  schema._friendly = options.friendly;
 
   schema.statics.findByFriendly = findByFriendly;
   if (options.findById === true)
@@ -33,7 +34,8 @@ module.exports = function(schema, options) {
 };
 
 var findByFriendly = function(id, fields, options, callback) {
-  var query = { $or: [{ slug: id }] };
+  var friendly = {}; friendly[this.schema._friendly] = id;
+  var query = { $or: [friendly] };
   if (id.match(/^[0-9a-fA-F]{24}$/)) query.$or.push({ _id: id });
   return this.findOne(query, fields, options, callback);
 };
@@ -51,9 +53,9 @@ var unique = function(candidate, options, callback) {
   var sort   = {}; sort  [options.friendly] = -1;
   var fields = {}; fields[options.friendly] = true;
 
+  where['_id'] = { $ne: this._id };
   this.collection.findOne(where, fields, { sort: sort }, function(error, existing) {
     if (!existing) return callback(candidate);
-
     var count = existing[options.friendly].match(/.*-(\d+)$/);
     count = (count ? count[1]*1 : 0) + 1;
     callback(candidate + '-' + count);
