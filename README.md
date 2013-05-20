@@ -8,7 +8,7 @@ Friendly URLs for you Mongoose models.
 ## Usage
 Simply install the `mongoose-friendly` plugin in your schema like this:
 
-```
+```javascript
 var mongoose = require('mongoose');
 var friendly = require('mongoose-friendly');
 var MySchema = new mongoose.Schema({ title: String });
@@ -19,7 +19,7 @@ A static method `findByFriendly` is added to your schema, and you can use it as 
 
 Here are the options (as defaults) you can pass when installing the plugin:
 
-```
+```javascript
 MySchema.plugin(friendly, {
   source: 'title',  // Attribute to generate the friendly version from.
   friendly: 'slug', // Attribute to set the friendly version of source.
