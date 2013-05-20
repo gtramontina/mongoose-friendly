@@ -6,7 +6,7 @@
   "scripts"         : {
     "test"          : "mocha"
   },
-  "repository"      : "",
+  "repository"      : "git://github.com/gtramontina/mongoose-friendly.git",
   "keywords"        : [ "mongoose", "url", "friendly", "slug" ],
   "author"          : "Guilherme Johansson Tramontina",
   "license"         : "BSD",
