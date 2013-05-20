@@ -36,7 +36,7 @@ module.exports = function(schema, options) {
 var findByFriendly = function(id, fields, options, callback) {
   var friendly = {}; friendly[this.schema._friendly] = id;
   var query = { $or: [friendly] };
-  if (id.match(/^[0-9a-fA-F]{24}$/)) query.$or.push({ _id: id });
+  if (id && id.toString().match(/^[0-9a-fA-F]{24}$/)) query.$or.push({ _id: id });
   return this.findOne(query, fields, options, callback);
 };
 

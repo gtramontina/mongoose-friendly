@@ -107,5 +107,14 @@ describe('friendly', function() {
         });
       });
     });
+
+    it('finds by id', function(done) {
+      new Post({ title: 'This is my 1st. post!!' }).save(function(error, post) {
+        Post.findById(post._id, function(error, found) {
+          assert.equal(found._id.toString(), post._id.toString());
+          done();
+        });
+      });
+    });
   });
 });
