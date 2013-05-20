@@ -2,7 +2,7 @@
   "name"            : "mongoose-friendly",
   "version"         : "0.1.0",
   "description"     : "A Mongoose plugin for friendly URLs.",
-  "main"            : "index.js",
+  "main"            : "src/friendly.js",
   "scripts"         : {
     "test"          : "mocha"
   },
