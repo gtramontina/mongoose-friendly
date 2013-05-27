@@ -2,6 +2,7 @@ mongoose-friendly
 ==============
 [![Build Status](https://travis-ci.org/gtramontina/mongoose-friendly.png)](https://travis-ci.org/gtramontina/mongoose-friendly)
 [![Dependency Status](https://gemnasium.com/gtramontina/mongoose-friendly.png)](https://gemnasium.com/gtramontina/mongoose-friendly)
+[![NPM version](https://badge.fury.io/js/mongoose-friendly.png)](http://badge.fury.io/js/mongoose-friendly)
 
 Friendly URLs for you Mongoose models.
 
