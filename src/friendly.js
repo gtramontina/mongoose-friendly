@@ -14,6 +14,10 @@ var defaults = function(opts) {
   return opts;
 };
 
+var readAttribute = function(object, path) {
+  return path.split('.').reduce(function(obj, attr) { return obj[attr]; }, object);
+};
+
 module.exports = function(schema, options) {
   options = defaults(options);
   if (!schema.paths[options.source])
@@ -42,7 +46,7 @@ var findByFriendly = function(id, fields, options, callback) {
 
 var setFriendlyAttribute = function(options) { return function(next) {
   var doc = this;
-  var candidate = this[options.friendly] || urlify(this[options.source]);
+  var candidate = this[options.friendly] || urlify(readAttribute(this, options.source));
   unique.apply(this, [candidate, options, function(friendly) {
     doc[options.friendly] = friendly; next();
   }]);

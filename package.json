@@ -1,6 +1,6 @@
 {
   "name"            : "mongoose-friendly",
-  "version"         : "0.1.2",
+  "version"         : "0.1.3",
   "description"     : "A Mongoose plugin for friendly URLs.",
   "main"            : "src/friendly.js",
   "scripts"         : {

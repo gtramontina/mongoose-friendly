@@ -62,12 +62,23 @@ describe('friendly', function() {
     });
     afterEach(function() { mongoose.models = {}; });
 
+    it('allows a deep attribute as the source', function(done) {
+      var I18NPostSchema = new mongoose.Schema({ title: { en_US: String, pt_BR: String } });
+      I18NPostSchema.plugin(friendly, { source: 'title.pt_BR' });
+      var I18NPost = mongoose.model('I18NPost', I18NPostSchema);
+      new I18NPost({ title: { en_US: 'My Title', pt_BR: 'Meu Titulo' } }).save(function(error, post) {
+        assert.equal(post.slug, 'meu-titulo');
+        done(error);
+      });
+    });
+
     it('sets the friendly attribute when not present', function(done) {
       new Post({ title: ' This is my first post! ' }).save(function(error, post) {
         assert.equal(post.slug, 'this-is-my-first-post');
         done(error);
       });
     });
+
 
     it('does not set the friendly attribute when already present', function(done) {
       new Post({ title: 'Any', slug: 'my-slug' }).save(function(error, post) {
