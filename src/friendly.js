@@ -53,15 +53,19 @@ var setFriendlyAttribute = function(options) { return function(next) {
 }};
 
 var unique = function(candidate, options, callback) {
-  var where  = {}; where [options.friendly] = new RegExp('^'+candidate);
-  var sort   = {}; sort  [options.friendly] = -1;
-  var fields = {}; fields[options.friendly] = true;
-
+  var where  = {}; where[options.friendly] = new RegExp('^'+candidate);
   where['_id'] = { $ne: this._id };
-  this.collection.findOne(where, fields, { sort: sort }, function(error, existing) {
-    if (!existing) return callback(candidate);
-    var count = existing[options.friendly].match(/.*-(\d+)$/);
-    count = (count ? count[1]*1 : 0) + 1;
-    callback(candidate + '-' + count);
+  var field = {}; field[options.friendly] = true;
+
+  this.collection.find(where, field, function(error, cursor) {
+    cursor.toArray(function(error, docs) {
+      if (!docs.length) return callback(candidate);
+      var max = docs.reduce(function(max, doc) {
+        var count = doc[options.friendly].match(/.*-(\d+)$/);
+        count = (count ? count[1]*1 : 0) + 1;
+        return (count > max)? count : max;
+      }, 0);
+      callback(candidate + '-' + max);
+    });
   });
 };

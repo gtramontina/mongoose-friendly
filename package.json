@@ -16,6 +16,7 @@
   "devDependencies" : {
     "mocha"         : "1.9",
     "chai"          : "1.6",
-    "mongoose"      : "3.6"
+    "mongoose"      : "3.6",
+    "async"         : "0.2"
   }
 }

@@ -98,15 +98,29 @@ describe('friendly', function() {
     });
 
     it('ensures the uniqueness of the friendly attribute value', function(done) {
-      new Post({ title: 'This should be UNIQUE!' }).save(function(error, post0) {
-        new Post({ title: 'This should be UNIQUE!' }).save(function(error, post1) {
-          new Post({ title: 'This should be UNIQUE!' }).save(function(error, post2) {
-            assert.equal(post0.slug, 'this-should-be-unique');
-            assert.equal(post1.slug, 'this-should-be-unique-1');
-            assert.equal(post2.slug, 'this-should-be-unique-2');
-            done();
-          });
-        });
+      async.timesSeries(112, function(n, next) {
+        new Post({ title: 'This should be UNIQUE!' }).save(next);
+      }, function(error, posts) {
+        if (error) return done(error);
+        assert.equal(posts[0].slug, 'this-should-be-unique');
+        assert.equal(posts[1].slug, 'this-should-be-unique-1');
+        assert.equal(posts[2].slug, 'this-should-be-unique-2');
+        //...
+        assert.equal(posts[10].slug, 'this-should-be-unique-10');
+        assert.equal(posts[11].slug, 'this-should-be-unique-11');
+        assert.equal(posts[12].slug, 'this-should-be-unique-12');
+        //...
+        assert.equal(posts[20].slug, 'this-should-be-unique-20');
+        assert.equal(posts[21].slug, 'this-should-be-unique-21');
+        assert.equal(posts[22].slug, 'this-should-be-unique-22');
+        //...
+        assert.equal(posts[100].slug, 'this-should-be-unique-100');
+        assert.equal(posts[101].slug, 'this-should-be-unique-101');
+        assert.equal(posts[102].slug, 'this-should-be-unique-102');
+        //...
+        assert.equal(posts[110].slug, 'this-should-be-unique-110');
+        assert.equal(posts[111].slug, 'this-should-be-unique-111');
+        done();
       });
     });
 

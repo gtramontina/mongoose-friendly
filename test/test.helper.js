@@ -1,6 +1,8 @@
 global.assert = require('chai').assert;
 global.mongoURL = 'mongodb://127.0.0.1/mongoose_friendly_test';
 global.mongoose = require('mongoose');
+global.async = require('async');
+
 mongoose.connect(mongoURL, function(error) {
   if (!error) return;
   console.error(error, 'You need to have mongodb running in order to run all tests.');
