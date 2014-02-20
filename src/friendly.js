@@ -11,6 +11,7 @@ var defaults = function(opts) {
   opts.friendly = opts.friendly || 'slug';
   opts.addIndex = opts.addIndex !== undefined ? opts.addIndex : true;
   opts.findById = opts.findById !== undefined ? opts.findById : true;
+  opts.update   = opts.update   !== undefined ? opts.update : false;
   return opts;
 };
 
@@ -46,7 +47,7 @@ var findByFriendly = function(id, fields, options, callback) {
 
 var setFriendlyAttribute = function(options) { return function(next) {
   var doc = this;
-  var candidate = this[options.friendly] || urlify(readAttribute(this, options.source));
+  var candidate = !options.update && this[options.friendly] || urlify(readAttribute(this, options.source));
   unique.apply(this, [candidate, options, function(friendly) {
     doc[options.friendly] = friendly; next();
   }]);

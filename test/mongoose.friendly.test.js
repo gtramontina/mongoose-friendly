@@ -97,6 +97,31 @@ describe('friendly', function() {
       });
     });
 
+    it('options.update generates auto slug even if force attempted', function(done) {
+      UpdateSchema = new mongoose.Schema({ title: String });
+      UpdateSchema.plugin(friendly, { update: true });
+      var Update = mongoose.model('Update', UpdateSchema);
+
+      new Update({ title: 'Any', slug: 'my-slug' }).save(function(error, update) {
+        assert.equal(update.slug, 'any');
+        done(error);
+      });
+    });
+
+    it('force updates slug when options.update is true', function(done) {
+      UpdateSchema = new mongoose.Schema({ title: String });
+      UpdateSchema.plugin(friendly, { update: true });
+      var Update = mongoose.model('Update', UpdateSchema);
+
+      new Update({ title: 'It should remain the same.' }).save(function(error, existing) {
+        existing.title = 'Now I changed it...';
+        existing.save(function(error, saved) {
+          assert.equal(saved.slug, 'now-i-changed-it');
+          done();
+        });
+      });
+    });
+
     it('ensures the uniqueness of the friendly attribute value', function(done) {
       async.timesSeries(112, function(n, next) {
         new Post({ title: 'This should be UNIQUE!' }).save(next);
