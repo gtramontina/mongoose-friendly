@@ -24,6 +24,7 @@ Here are the options (as defaults) you can pass when installing the plugin:
 MySchema.plugin(friendly, {
   source: 'title',  // Attribute to generate the friendly version from.
   friendly: 'slug', // Attribute to set the friendly version of source.
+  update: false,    // Updates friendly field on subsequent saves.
   addIndex: true,   // Sets {unique: true} as index for the friendly attribute.
   findById: true    // Turns findById into an alias for findByFriendly.
 });
